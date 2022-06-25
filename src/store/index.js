@@ -5,6 +5,14 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    id:'',
+    searchtext:'',
+    songX:{
+      id:'',
+      url:'',
+      sname:'',
+      name:''
+    }
   },
   mutations: {
   },

@@ -1,0 +1,65 @@
+{
+  "id": "3477903",
+  "name": "music",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "577395",
+      "name": "向上2",
+      "font_class": "xiangshang2",
+      "unicode": "e76e",
+      "unicode_decimal": 59246
+    },
+    {
+      "icon_id": "6582264",
+      "name": "播放2",
+      "font_class": "bofang1",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "2076218",
+      "name": "播放2",
+      "font_class": "bofang",
+      "unicode": "e87c",
+      "unicode_decimal": 59516
+    },
+    {
+      "icon_id": "7594048",
+      "name": "24gl-play",
+      "font_class": "24gl-play",
+      "unicode": "ea6d",
+      "unicode_decimal": 60013
+    },
+    {
+      "icon_id": "1046065",
+      "name": "单列列表",
+      "font_class": "danlieliebiao",
+      "unicode": "e6e4",
+      "unicode_decimal": 59108
+    },
+    {
+      "icon_id": "1120834",
+      "name": "音乐",
+      "font_class": "yinle",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "7594175",
+      "name": "24gf-playSquare",
+      "font_class": "24gf-playSquare",
+      "unicode": "ea88",
+      "unicode_decimal": 60040
+    },
+    {
+      "icon_id": "11391542",
+      "name": "音乐",
+      "font_class": "yinle1",
+      "unicode": "e63b",
+      "unicode_decimal": 58939
+    }
+  ]
+}
