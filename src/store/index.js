@@ -12,7 +12,8 @@ export default new Vuex.Store({
       url:'',
       sname:'',
       name:''
-    }
+    },
+    lyc:[]
   },
   mutations: {
   },

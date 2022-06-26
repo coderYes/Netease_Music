@@ -74,14 +74,14 @@
       <!-- 动态背景 -->
       <div
         class="beijing"
-        :style="{ backgroundImage: 'url(' + this.songX.url + ')' }"
+        :style="{ backgroundImage: 'url(' + songX.url + ')' }"
       ></div>
       <!-- 歌词面板 -->
       <div class="showlyc">
         <!-- 左侧区域 -->
         <div class="left">
           <img
-            :src="this.songX.url"
+            :src="songX.url"
             :class="{ stopimgmove: !playState }"
             alt=""
           />
@@ -97,7 +97,7 @@
             <div class="contents">
               <div
                 :class="['items', { item_actice: lycindex == index }]"
-                v-for="(item, index) in lyc"
+                v-for="(item, index) in lycs"
                 :key="index"
               >
                 {{ item[1] }}
@@ -119,12 +119,13 @@
       </div>
       <!-- audio -->
       <audio
+        id="music"
         ref="audio"
         @play="play"
         @pause="pause"
         @timeupdate="timeupdate"
+        @ended="ended"
         :src="idd"
-        loop
         controls
         autoplay
       ></audio>
@@ -143,8 +144,6 @@ export default {
       searchs: "",
       // 歌词面板显示
       showl: false,
-      // 歌词
-      lyc: [],
       // 播放状态
       playState: "",
       // better-scroll
@@ -172,6 +171,10 @@ export default {
     idd() {
       return this.$store.state.id;
     },
+    //歌词
+    lycs(){
+      return this.$store.state.lyc
+    }
   },
   methods: {
     // 搜索
@@ -185,7 +188,7 @@ export default {
     //当前播放时长
     timeupdate(e) {
       let currentTime = e.target.currentTime;
-      let lyc = this.lyc;
+      let lyc = this.lycs;
       for (let i = 0; i < lyc.length; i++) {
         if (lyc[i][0] < currentTime && currentTime < lyc[i + 1][0]) {
           this.lycindex = i;
@@ -200,7 +203,7 @@ export default {
       this.showl = !this.showl;
       setTimeout(() => {
         this.scroll = new BScroll(document.querySelector(".wrapper"));
-        console.log(this.scroll);
+        // console.log(this.scroll);
       }, 100);
     },
     //歌词
@@ -208,19 +211,21 @@ export default {
       getlyc(this.songX.id).then((res) => {
         // console.log(res);
         if (res.code != 200) return;
-        let lycc = res.lrc.lyric;//获取歌词列表
-        let lyclist = lycc.split("\n");//以换行来分割
-        let re = /\[\d{2}:\d{2}\.\d{2,3}\]/;//匹配时间
+        let lycc = res.lrc.lyric; //获取歌词列表
+        let lyclist = lycc.split("\n"); //以换行来分割
+        let re = /\[\d{2}:\d{2}\.\d{2,3}\]/; //匹配时间
+        let lyc=[]
         for (let i in lyclist) {
           if (lyclist[i]) {
-            let date = lyclist[i].match(re);//匹配时间
-            date = date[0].slice(1, -1);//去除【】
-            let timelist = date.split(":");//以:分割
+            let date = lyclist[i].match(re); //匹配时间
+            date = date[0].slice(1, -1); //去除【】
+            let timelist = date.split(":"); //以:分割
             let m = timelist[0];
             let s = timelist[1];
-            let time = parseFloat(m) * 60 + parseFloat(s);//计算时间
-            let lrcitem = lyclist[i].replace(re, "");//获取歌词
-            this.lyc.push([time, lrcitem]);
+            let time = parseFloat(m) * 60 + parseFloat(s); //计算时间
+            let lrcitem = lyclist[i].replace(re, ""); //获取歌词
+            lyc.push([time, lrcitem]);
+            this.$store.state.lyc=lyc
           }
         }
         // console.log(this.lyc);
@@ -233,6 +238,13 @@ export default {
     //暂停
     pause() {
       this.playState = false;
+    },
+    //结束
+    ended() {
+      this.lycindex = 0;
+      let audio=document.getElementById('music')
+      audio.play()
+      
     },
   },
 };
